@@ -1,0 +1,24 @@
+name: prek-pre-commit
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prek-pre-commit:
+    name: prek-pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      # perk is https://github.com/j178/prek-action / https://github.com/j178/prek-action
+      - uses: j178/prek-action@v3.1.0
+        with:
+          install-only: true
+          # extra-args: '--all-files --directory packages/'
+      - run: prek run --show-diff-on-failure --color=always --all-files

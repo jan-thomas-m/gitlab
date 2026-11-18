@@ -1,0 +1,41 @@
+name: Verify commits
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  verify-commit-locks:
+    name: verify-commit-locks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check that all commits are verified
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          failed=0
+
+          while read -r sha; do
+            verified="$(
+              gh api "repos/${REPO}/commits/${sha}" \
+                --jq '.commit.verification.verified'
+            )"
+
+            if [[ "${verified}" != "true" ]]; then
+              echo "::ERROR:Commit ${sha} is not verified"
+              failed=1
+            else
+              echo "Commit ${sha} is verified"
+            fi
+          done < <(
+            gh api --paginate \
+              "repos/${REPO}/pulls/${PR}/commits" \
+              --jq '.[].sha'
+          )
+
+          exit "${failed}"
