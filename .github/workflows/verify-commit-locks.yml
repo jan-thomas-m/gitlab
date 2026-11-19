@@ -1,4 +1,4 @@
-name: Verify commits
+name: verify-commits-signed
 
 on:
   pull_request:

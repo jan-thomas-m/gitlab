@@ -1,6 +1,6 @@
 # https://github.com/rhysd/actionlint/blob/v1.7.12/docs/usage.md
 
-name: Lint GitHub Actions workflows
+name: action-lint
 # on: [push, pull_request]
 on:
   push:
