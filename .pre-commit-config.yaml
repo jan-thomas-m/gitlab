@@ -24,6 +24,11 @@ repos:
         # yamllint disable rule:line-length
         entry: |
           bash -c '
+            echo '-----'
+            env | sort
+            echo '-----'
+            set | sort
+            echo '-----'
             days=7
             ${CI:-false} && return 0      # Skip updating when run in CI
             if [[ $(( $(date +'%s') - $( stat -f '%m' .pre-commit-config.yaml) )) -gt $(( 3600 * 24 * ${days} )) ]] ; then

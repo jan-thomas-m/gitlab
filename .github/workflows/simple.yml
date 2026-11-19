@@ -1,4 +1,4 @@
-name: test-git-workflow
+name: simple-git-workflow
 run-name: A simple git workflow noop test
 on:
   push:
@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   test:
-    name: test
+    name: simple
     runs-on: ubuntu-slim
     # runs-on: ubuntu-latest
     steps:

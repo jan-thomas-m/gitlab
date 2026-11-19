@@ -8,11 +8,11 @@ permissions:
   pull-requests: read
 
 jobs:
-  verify-commit-locks:
-    name: verify-commit-locks
+  verify-commits-signed:
+    name: verify-commits-signed
     runs-on: ubuntu-latest
     steps:
-      - name: Check that all commits are verified
+      - name: verify-commits-signed
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
